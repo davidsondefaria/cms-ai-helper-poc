@@ -1,0 +1,115 @@
+# version: "3.7"
+
+# services:
+#   traefik:
+#     image: "traefik"
+#     container_name: n8n-traefik-service
+#     restart: unless-stopped
+#     command:
+#       - "--api=true"
+#       - "--api.insecure=true"
+#       - "--providers.docker=true"
+#       - "--providers.docker.exposedbydefault=false"
+#       - "--entrypoints.web.address=:80"
+#       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+#       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+#       - "--entrypoints.websecure.address=:443"
+#       - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
+#       - "--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}"
+#       - "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json"
+#     ports:
+#       - "80:80"
+#       - "443:443"
+#     volumes:
+#       - traefik_data:/letsencrypt
+#       - /var/run/docker.sock:/var/run/docker.sock:ro
+
+#   n8n:
+#     image: docker.n8n.io/n8nio/n8n
+#     container_name: n8n-service
+#     restart: unless-stopped
+#     ports:
+#       - "127.0.0.1:5678:5678"
+#     labels:
+#       - traefik.enable=true
+#       - traefik.http.routers.n8n.rule=Host(`${SUBDOMAIN}.${DOMAIN_NAME}`)
+#       - traefik.http.routers.n8n.tls=true
+#       - traefik.http.routers.n8n.entrypoints=web,websecure
+#       - traefik.http.routers.n8n.tls.certresolver=mytlschallenge
+#       - traefik.http.middlewares.n8n.headers.SSLRedirect=true
+#       - traefik.http.middlewares.n8n.headers.STSSeconds=315360000
+#       - traefik.http.middlewares.n8n.headers.browserXSSFilter=true
+#       - traefik.http.middlewares.n8n.headers.contentTypeNosniff=true
+#       - traefik.http.middlewares.n8n.headers.forceSTSHeader=true
+#       - traefik.http.middlewares.n8n.headers.SSLHost=${DOMAIN_NAME}
+#       - traefik.http.middlewares.n8n.headers.STSIncludeSubdomains=true
+#       - traefik.http.middlewares.n8n.headers.STSPreload=true
+#       - traefik.http.routers.n8n.middlewares=n8n@docker
+#     environment:
+#       - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
+#       - N8N_PORT=5678
+#       - N8N_PROTOCOL=https
+#       - NODE_ENV=production
+#       - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
+#       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+#     volumes:
+#       - n8n_data:/home/node/.n8n
+
+#   strapi:
+#     container_name: n8n-strapi
+#     build: .
+#     image: strapi:latest
+#     restart: unless-stopped
+#     env_file: .env
+#     environment:
+#       DATABASE_CLIENT: ${DATABASE_CLIENT}
+#       DATABASE_HOST: strapiDB
+#       DATABASE_PORT: ${DATABASE_PORT}
+#       DATABASE_NAME: ${DATABASE_NAME}
+#       DATABASE_USERNAME: ${DATABASE_USERNAME}
+#       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+#       JWT_SECRET: ${JWT_SECRET}
+#       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+#       APP_KEYS: ${APP_KEYS}
+#       NODE_ENV: ${NODE_ENV}
+#     volumes:
+#       - ./config:/opt/app/config
+#       - ./src:/opt/app/src
+#       - ./package.json:/opt/package.json
+#       - ./yarn.lock:/opt/yarn.lock
+#       - ./.env:/opt/app/.env
+#       - ./public/uploads:/opt/app/public/uploads
+#     ports:
+#       - "1337:1337"
+#     networks:
+#       - strapi
+#     depends_on:
+#       - strapiDB
+
+#   strapiDB:
+#     container_name: n8n-strapiDB
+#     platform: linux/amd64 #for platform error on Apple M1 chips
+#     restart: unless-stopped
+#     env_file: .env
+#     image: mysql:5.7
+#     command: --default-authentication-plugin=mysql_native_password
+#     environment:
+#       MYSQL_USER: ${DATABASE_USERNAME}
+#       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+#       MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+#       MYSQL_DATABASE: ${DATABASE_NAME}
+#     volumes:
+#       - strapi-data:/var/lib/mysql
+#       #- ./data:/var/lib/mysql # if you want to use a bind folder
+#     ports:
+#       - "3306:3306"
+#     networks:
+#       - strapi
+
+# volumes:
+#   traefik_data:
+#     external: true
+#   n8n_data:
+#     external: true
+#   strapi-data:
+#     external: true
