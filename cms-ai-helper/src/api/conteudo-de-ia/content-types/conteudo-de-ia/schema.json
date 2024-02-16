@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "conteudo_de_ias",
+  "info": {
+    "singularName": "conteudo-de-ia",
+    "pluralName": "conteudo-de-ias",
+    "displayName": "Conteúdo de IA"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Conteudo": {
+      "type": "richtext"
+    },
+    "Prompt": {
+      "type": "text"
+    },
+    "MImagem": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
