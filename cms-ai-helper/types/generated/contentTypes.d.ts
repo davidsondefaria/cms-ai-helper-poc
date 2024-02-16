@@ -362,39 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiConteudoDeIaConteudoDeIa extends Schema.CollectionType {
-  collectionName: 'conteudo_de_ias';
-  info: {
-    singularName: 'conteudo-de-ia';
-    pluralName: 'conteudo-de-ias';
-    displayName: 'Conte\u00FAdo de IA';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Title: Attribute.String;
-    Conteudo: Attribute.RichText;
-    Prompt: Attribute.Text;
-    MImagem: Attribute.Media;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::conteudo-de-ia.conteudo-de-ia',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::conteudo-de-ia.conteudo-de-ia',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -816,6 +783,71 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiConteudoDeIaConteudoDeIa extends Schema.CollectionType {
+  collectionName: 'conteudo_de_ias';
+  info: {
+    singularName: 'conteudo-de-ia';
+    pluralName: 'conteudo-de-ias';
+    displayName: 'Conte\u00FAdo de IA';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Title: Attribute.String;
+    Conteudo: Attribute.RichText;
+    Prompt: Attribute.Text;
+    MImagem: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::conteudo-de-ia.conteudo-de-ia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::conteudo-de-ia.conteudo-de-ia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPersonPerson extends Schema.CollectionType {
+  collectionName: 'people';
+  info: {
+    singularName: 'person';
+    pluralName: 'people';
+    displayName: 'Person';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    lastName: Attribute.DynamicZone<['last-name.last-name']>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::person.person',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::person.person',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -826,7 +858,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::conteudo-de-ia.conteudo-de-ia': ApiConteudoDeIaConteudoDeIa;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -835,6 +866,8 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::conteudo-de-ia.conteudo-de-ia': ApiConteudoDeIaConteudoDeIa;
+      'api::person.person': ApiPersonPerson;
     }
   }
 }

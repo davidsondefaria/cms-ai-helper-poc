@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_last_name_last_names",
+  "info": {
+    "displayName": "Last Name",
+    "icon": "emotionHappy",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    }
+  }
+}
