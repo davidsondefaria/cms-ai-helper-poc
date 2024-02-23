@@ -829,7 +829,7 @@ export interface ApiPersonPerson extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String;
-    lastName: Attribute.DynamicZone<['last-name.last-name']>;
+    lastName: Attribute.Component<'last-name.last-name', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

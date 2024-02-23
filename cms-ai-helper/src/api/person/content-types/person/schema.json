@@ -16,10 +16,9 @@
       "type": "string"
     },
     "lastName": {
-      "type": "dynamiczone",
-      "components": [
-        "last-name.last-name"
-      ]
+      "type": "component",
+      "repeatable": true,
+      "component": "last-name.last-name"
     }
   }
 }
